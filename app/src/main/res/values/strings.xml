@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">UECEmap</string>
+    <string name="title_activity_maps">Mapa da UECE</string>
+    <string name="hint">Digite o local desejado...</string>
+    <string name="title_activity_tela_info">TelaInfo</string>
+    <string name="title_cardapio_activity">Cardapio RU</string>
+    <string name="action_sobre_title">Sobre</string>
+    <string name="action_sincronizar_title">Sincronizar</string>
+</resources>

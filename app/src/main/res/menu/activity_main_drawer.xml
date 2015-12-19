@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_main"
+            android:icon="@drawable/ic_menu_main"
+            android:title="@string/menu_str_main" />
+        <item
+            android:id="@+id/nav_ru"
+            android:icon="@drawable/ic_menu_ru"
+            android:title="@string/menu_str_ru" />
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_menu_map"
+            android:title="@string/menu_str_map" />
+
+
+    </group>
+
+
+</menu>

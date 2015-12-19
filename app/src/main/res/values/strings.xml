@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">HubUece</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="menu_str_ru">RU</string>
+    <string name="menu_str_map">Mapa</string>
+    <string name="menu_str_main">Principal</string>
+    <string name="menu_week_day_activity_rate">Avaliar</string>
+    <string name="fragmet_map_menu_search">Search</string>
+
+
+    <string name="dlg_network_notavailable_title">Sem conexão</string>
+    <string name="dlg_network_notavailable_message">Conecte-se a internet e tente novamente.</string>
+    <string name="dlg_positive_ok">OK</string>
+    <string name="dlg_network_error_title">Atenção</string>
+    <string name="dlg_network_error_message">Um erro de rede ocorreu. Tente novamente mais tarde.</string>
+</resources>

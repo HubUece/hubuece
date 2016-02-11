@@ -17,4 +17,7 @@
     <string name="dlg_positive_ok">OK</string>
     <string name="dlg_network_error_title">Atenção</string>
     <string name="dlg_network_error_message">Um erro de rede ocorreu. Tente novamente mais tarde.</string>
+
+
+    <string name="waiting">Aguarde...</string>
 </resources>

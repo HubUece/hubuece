@@ -1,4 +1,4 @@
-package com.example.vroch.hubuece.framework;
+package com.luna9.swconnection;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -42,6 +42,8 @@ public class SWConnection {
     public HashMap<String,Object> variables;
     public int responseCode;
 
+    private String encryptionKey;
+
     public SWConnectionDelegate delegate;
 
     public SWConnection(int resultType, String url, String identifier) {
@@ -63,6 +65,10 @@ public class SWConnection {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public void setEncryptionKey(String encryptionKey) {
+        this.encryptionKey = encryptionKey;
     }
 
 
@@ -125,7 +131,7 @@ public class SWConnection {
 
                 for (Map.Entry<String, Object> entry : variables.entrySet()) {
                     String param = entry.getKey();
-                    String value = (String)entry.getValue();
+                    String value = entry.getValue().toString();
                     uriBuilder.appendQueryParameter(param, value);
                 }
 
@@ -192,7 +198,6 @@ public class SWConnection {
             InputStream istream = null;
             String response = null;
             HttpURLConnection connection = null;
-
             try {
 
                 connection = connect(params[0], variables);
@@ -246,6 +251,7 @@ public class SWConnection {
                 }
                 else {
                     SWResult res = new SWResult();
+                    res.isEncrypted = false;
                     res.isTrue = true;
                     res.title = "Perfect!";
                     res.message = "Works!";
@@ -255,7 +261,15 @@ public class SWConnection {
 
                     resultObject = res;
                 }
-                if (delegate != null ) delegate.dataSentAndLoadedSuccessfully(SWConnection.this, resultObject);
+
+                if (resultObject.isEncrypted) {
+
+                    // see swframework documentation for more details
+                }
+
+                if (delegate != null ) {
+                    delegate.dataSentAndLoadedSuccessfully(SWConnection.this, resultObject);
+                }
 
             }
             catch(JSONException e){

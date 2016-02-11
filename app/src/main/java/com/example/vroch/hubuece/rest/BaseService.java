@@ -2,8 +2,9 @@ package com.example.vroch.hubuece.rest;
 
 import android.util.Log;
 
-import com.example.vroch.hubuece.framework.SWConnection;
-import com.example.vroch.hubuece.framework.SWResult;
+
+import com.luna9.swconnection.SWConnection;
+import com.luna9.swconnection.SWResult;
 
 import java.util.HashMap;
 
@@ -11,10 +12,10 @@ import java.util.HashMap;
 public abstract class BaseService implements SWConnection.SWConnectionDelegate {
     public static final String TAG = "BaseService";
 
-    protected static final String BASE_SERVICE_URL = "";
+    protected static final String BASE_SERVICE_URL = "http://192.168.1.120:8080/HubUeceServelet/rest/appServelet/";
 
     public SWConnection createDefaultSWConnection(String url, String connectionId, HashMap<String, Object> variables) {
-        SWConnection connection = new SWConnection(SWConnection.SWConnectionResultGeneric, url, connectionId);
+        SWConnection connection = new SWConnection(SWConnection.SWConnectionResultStandard, url, connectionId);
 
         connection.variables    = variables;
         connection.delegate     = this;
@@ -27,7 +28,7 @@ public abstract class BaseService implements SWConnection.SWConnectionDelegate {
 
     @Override
     public void dataSentAndLoadFail(SWConnection connection, Exception systemError) {
-
+        Log.d(getServiceTag(),"Error: "+systemError.toString());
     }
 
     @Override

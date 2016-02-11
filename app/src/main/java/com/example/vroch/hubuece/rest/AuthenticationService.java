@@ -3,8 +3,10 @@ package com.example.vroch.hubuece.rest;
 import android.content.Context;
 
 import com.example.vroch.hubuece.R;
-import com.example.vroch.hubuece.framework.SWConnection;
-import com.example.vroch.hubuece.framework.SWResult;
+import com.example.vroch.hubuece.data.provider.AppPreferences;
+import com.luna9.swconnection.SWConnection;
+import com.luna9.swconnection.SWResult;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -18,12 +20,12 @@ public class AuthenticationService extends BaseService {
 
     private Context mContext;
     private OnAuthenticationServiceFinishedListener mServiceListener;
-    //private AppPreferences mPrefs;
+    private AppPreferences mPrefs;
 
     public AuthenticationService(Context context) {
         super();
         mContext = context.getApplicationContext();
-       // mPrefs = AppPreferences.getInstance(mContext);
+        mPrefs = AppPreferences.getInstance(mContext);
     }
 
     public void setOnAuthenticationServiceFinishedListener(OnAuthenticationServiceFinishedListener l) {
@@ -88,8 +90,8 @@ public class AuthenticationService extends BaseService {
             String userName = jsonObject.getString("usuario");
             String password = jsonObject.getString("senha");
 
-//            mPrefs.setUserName(userName);
-//            mPrefs.setUserPassword(password);
+            mPrefs.setUserName(userName);
+           // mPrefs.setUserPassword(password);
         }
         catch (JSONException e) {
             e.printStackTrace();

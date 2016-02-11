@@ -1,4 +1,4 @@
-package com.example.vroch.hubuece.framework;
+package com.example.vroch.hubuece.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;

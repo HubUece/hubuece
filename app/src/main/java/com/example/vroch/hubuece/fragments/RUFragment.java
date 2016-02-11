@@ -1,5 +1,6 @@
 package com.example.vroch.hubuece.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,17 +16,21 @@ import com.example.vroch.hubuece.activities.WeekDayMenuActivity;
 import com.example.vroch.hubuece.adapters.ListViewWeekDaysAdapter;
 import com.example.vroch.hubuece.data.model.MenuItem;
 import com.example.vroch.hubuece.data.model.WeekDay;
+import com.example.vroch.hubuece.rest.RuMenuService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vroch on 12/12/2015.
  */
-public class RUFragment extends Fragment  {
+public class RUFragment extends Fragment implements RuMenuService.OnRuMenuServiceFinishedListener {
 
+    private ProgressDialog mProgressDialog;
+    private List<WeekDay> mList;
 
     public static RUFragment newInstance() {
         
@@ -48,6 +53,11 @@ public class RUFragment extends Fragment  {
         ArrayList<WeekDay> listWeekDays = new ArrayList<>();
 
         ArrayList<MenuItem> jsonObjects = new ArrayList<>();
+
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage(this.getResources().getString(R.string.waiting));
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setCancelable(false);
 
 
         MenuItem meet = new MenuItem("Carne",R.drawable.ic_menu_ru);
@@ -79,14 +89,43 @@ public class RUFragment extends Fragment  {
 
                 WeekDay clickedItem = (WeekDay) parent.getItemAtPosition(position);
 
-                Intent intent = new Intent(getActivity(),WeekDayMenuActivity.class);
-                intent.putExtra("itemClicked",clickedItem);
+                Intent intent = new Intent(getActivity(), WeekDayMenuActivity.class);
+                intent.putExtra("itemClicked", clickedItem);
                 startActivity(intent);
 
             }
         });
 
-
+        getRuMenuFromServer();
 
     }
+
+    private void getRuMenuFromServer() {
+
+    }
+
+    @Override
+    public void onRuMenuServiceSuccessful() {
+
+        hideProgressDialog();
+    }
+
+    @Override
+    public void onRuMenuServiceFailed(String title, String message, boolean networkError) {
+        hideProgressDialog();
+    }
+
+
+
+    private void showProgressDialog() {
+        mProgressDialog.show();
+
+    }
+
+    private void hideProgressDialog() {
+        mProgressDialog.hide();
+
+    }
+
+
 }

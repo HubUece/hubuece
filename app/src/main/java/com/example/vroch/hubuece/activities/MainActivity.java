@@ -16,17 +16,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.vroch.hubuece.R;
+import com.example.vroch.hubuece.data.provider.AppPreferences;
 import com.example.vroch.hubuece.fragments.MapFragment;
 import com.example.vroch.hubuece.fragments.RUFragment;
+import com.example.vroch.hubuece.rest.MapLocationsService;
+import com.example.vroch.hubuece.utils.Utils;
+import com.luna9.swconnection.SWResult;
+import com.luna9.swconnection.SWUtils;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MapLocationsService.OnMapLocationsServiceFinishedListener {
+
+    private AppPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -37,12 +43,33 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        preferences = AppPreferences.getInstance(this);
+
+        getMapLocations();
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void getMapLocations() {
+
+        MapLocationsService service = new MapLocationsService(this);
+        service.setOnAuthenticationServiceFinishedListener(this);
+
+        if(Utils.checkNetworkConnection(this,true) && !preferences.getMapTableIsUpdated())
+            service.getMapLocations();
+
+    }
+
+    @Override
+    public void onMapLocationsServiceSuccessful() {
+    }
+
+    @Override
+    public void onMapLocationsServiceFailed(String title, String message, boolean networkError) {
+        SWUtils.showAlertDialog(title,message,this);
+    }
 
     @Override
     public void onBackPressed() {
@@ -107,4 +134,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

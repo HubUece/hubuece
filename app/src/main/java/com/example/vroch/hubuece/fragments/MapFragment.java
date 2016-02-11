@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 
 
 import com.example.vroch.hubuece.R;
+import com.example.vroch.hubuece.data.dao.MapLocationDao;
+import com.example.vroch.hubuece.data.model.MapLocation;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -30,6 +32,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by vroch on 14/12/2015.
@@ -73,7 +78,7 @@ public class MapFragment extends Fragment {
         //setUpMapIfNeeded();
         View v =  inflater.inflate(R.layout.fragment_map, container, false);
 
-        mapView = (MapView) v.findViewById(R.id.mapView);
+        mapView = (MapView) v.findViewById(R.id.map_view);
         mapView.onCreate(savedInstanceState);
 
         mapView.onResume();
@@ -85,14 +90,8 @@ public class MapFragment extends Fragment {
         }
 
         googleMap = mapView.getMap();
-        // latitude and longitude
 
-        double latitude = 17.385044;
-        double longitude = 78.486671;
 
-        // create marker
-//        MarkerOptions marker = new MarkerOptions().position(
-//                new LatLng(latitude, longitude)).title("Hello Maps");
 //
 //        // Changing marker icon
 //        marker.icon(BitmapDescriptorFactory
@@ -105,7 +104,26 @@ public class MapFragment extends Fragment {
 //        googleMap.animateCamera(CameraUpdateFactory
 //                .newCameraPosition(cameraPosition));
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-33.86997, 151.2089), 18));
+
+        MapLocationDao dao = new MapLocationDao(getActivity());
+        List<MapLocation> mapLocations = dao.getAll();
+
+        for (int i = 0;i<mapLocations.size();i++){
+
+            MapLocation location  = mapLocations.get(i);
+
+            // create marker
+            MarkerOptions marker = new MarkerOptions().position(
+                new LatLng(location.getLatitude(), location.getLongitude())).title(location.getNome());
+
+            googleMap.addMarker(marker);
+        }
+
+
+        double defaultLatitude = -3.785603;
+        double defaultLongitude = -38.552485;
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(defaultLatitude, defaultLongitude), 16.0f));
 
         // Perform any camera updates here
         return v;
@@ -137,10 +155,6 @@ public class MapFragment extends Fragment {
         mapView.onLowMemory();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
-    }
 
 }

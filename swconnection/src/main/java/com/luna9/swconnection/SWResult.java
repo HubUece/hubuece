@@ -1,4 +1,4 @@
-package com.example.vroch.hubuece.framework;
+package com.luna9.swconnection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class SWResult {
 
     public boolean isTrue;
+    public boolean isEncrypted;
     public String title;
     public String message;
     public String resultMessage;
@@ -23,16 +24,19 @@ public class SWResult {
         this.dataObject = dataObject;
     }
 
-    public SWResult() { }
+    public SWResult() {
+
+    }
 
     public SWResult(JSONObject data) throws JSONException {
         //Data will be null when a timeout occurs.
         if (data != null) {
 
+            this.isEncrypted = data.getBoolean("isEncrypted");
             this.isTrue = data.getBoolean("isTrue");
             this.title = data.getString("title");
             this.message = data.getString("message");
-            this.resultCode = data.getInt("resultCode");
+            //this.resultCode = data.getInt("resultCode");
             this.resultMessage = data.getString("resultMessage");
             try {
                 this.dataObject = data.get("dataObject");
